@@ -1,4 +1,4 @@
-# BlinkNotch
+# Blink Reminder
 
 
 https://github.com/user-attachments/assets/bd9eb8b8-c80d-4f9e-8253-2c2f0912902d
@@ -6,11 +6,11 @@ https://github.com/user-attachments/assets/bd9eb8b8-c80d-4f9e-8253-2c2f0912902d
 
 **A calm macOS utility that quietly restores healthy blinking during focused work.**
 
-BlinkNotch is a lightweight background app that helps reduce dry eye during prolonged screen use. Instead of alerts, sounds, or notifications, it uses a subtle, peripheral animation near the Mac notch: two eyes appear, blink once slowly, and disappear.
+Blink Reminder is a lightweight background app that helps reduce dry eye during prolonged screen use. Instead of alerts, sounds, or notifications, it uses a subtle, peripheral animation near the Mac notch: two eyes appear, blink once slowly, and disappear.
 
 No interruption. No instructions. Just a gentle cue for a natural reflex.
 
-
+---
 
 ## Context (facts)
 
@@ -23,7 +23,7 @@ No interruption. No instructions. Just a gentle cue for a natural reflex.
 - **Risk groups:** office and screen workers report dry-eye symptoms **2–3× more often**
 - **Healthcare impact:** dry eye is among the **top reasons for eye-care visits globally**
 
-
+---
 
 ## Why this matters (not “just dry eyes”)
 
@@ -44,7 +44,7 @@ Severe dry eye can progress to:
 - Surface erosions or ulcers
 - Scarring that permanently degrades vision quality
 
-
+---
 
 ## What severe dry eye feels like
 
@@ -57,7 +57,7 @@ Patients commonly report:
 
 In advanced cases, blinking itself can feel painful, causing people to blink even less.
 
-
+---
 
 ## The problem
 
@@ -65,11 +65,11 @@ Focused screen work suppresses blinking by up to **70%**, disrupting tear and oi
 
 Existing reminder-based tools rely on alerts, sounds, or notifications. These interrupt attention, are easily ignored, and do not address **blink quality**, leaving hundreds of millions of screen users exposed to progressive visual degradation during prolonged digital work.
 
+---
 
+## The idea behind Blink Reminder
 
-## The idea behind BlinkNotch
-
-BlinkNotch does not tell users to blink.
+Blink Reminder does not tell users to blink.
 
 It **mirrors the missing reflex**.
 
@@ -80,7 +80,7 @@ It **mirrors the missing reflex**.
 
 The system feels *aware*, not corrective.
 
-
+---
 
 ## Design principles
 
@@ -96,9 +96,9 @@ The system feels *aware*, not corrective.
 - **Extreme restraint**  
   One blink, then gone
 
+---
 
-
-## What BlinkNotch does
+## What Blink Reminder does
 
 - Runs silently in the background
 - Appears every **10–15 minutes** (slightly randomized)
@@ -106,9 +106,9 @@ The system feels *aware*, not corrective.
 - Performs **one slow, complete blink**
 - Fades out and returns to idle
 
+---
 
-
-## What BlinkNotch does NOT do
+## What Blink Reminder does NOT do
 
 - No sound
 - No notifications
@@ -119,7 +119,7 @@ The system feels *aware*, not corrective.
 
 Everything runs locally on your Mac.
 
-
+---
 
 ## Animation behavior
 
@@ -134,11 +134,11 @@ Total visible time: ~3.5–4.0 seconds.
 
 No squeezing. No looping. No exaggeration.
 
-
+---
 
 ## User controls
 
-BlinkNotch has **no settings page** by design.
+Blink Reminder has **no settings page** by design.
 
 Menu bar options:
 - Pause (15 minutes / 1 hour / Today)
@@ -148,18 +148,18 @@ Menu bar options:
 - Quit
 - Support this project
 
-
+---
 
 ## Privacy
 
-BlinkNotch:
+Blink Reminder:
 - Does not use the camera
 - Does not collect data
 - Does not track behavior
 - Does not require internet access
 
-
+---
 
 ## One-line summary
 
-**BlinkNotch quietly restores a natural blink during focused work, helping protect tear stability and oil-gland health, then disappears.**
+**Blink Reminder quietly restores a natural blink during focused work, helping protect tear stability and oil-gland health, then disappears.**
