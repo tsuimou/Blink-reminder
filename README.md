@@ -10,7 +10,7 @@ Blink Reminder is a lightweight background app that helps reduce dry eye during 
 
 No interruption. No instructions. Just a gentle cue for a natural reflex.
 
----
+
 
 ## Context (facts)
 
@@ -23,7 +23,7 @@ No interruption. No instructions. Just a gentle cue for a natural reflex.
 - **Risk groups:** office and screen workers report dry-eye symptoms **2–3× more often**
 - **Healthcare impact:** dry eye is among the **top reasons for eye-care visits globally**
 
----
+
 
 ## Why this matters (not “just dry eyes”)
 
@@ -44,7 +44,7 @@ Severe dry eye can progress to:
 - Surface erosions or ulcers
 - Scarring that permanently degrades vision quality
 
----
+
 
 ## What severe dry eye feels like
 
@@ -57,7 +57,7 @@ Patients commonly report:
 
 In advanced cases, blinking itself can feel painful, causing people to blink even less.
 
----
+
 
 ## The problem
 
@@ -65,7 +65,7 @@ Focused screen work suppresses blinking by up to **70%**, disrupting tear and oi
 
 Existing reminder-based tools rely on alerts, sounds, or notifications. These interrupt attention, are easily ignored, and do not address **blink quality**, leaving hundreds of millions of screen users exposed to progressive visual degradation during prolonged digital work.
 
----
+
 
 ## The idea behind Blink Reminder
 
@@ -80,7 +80,7 @@ It **mirrors the missing reflex**.
 
 The system feels *aware*, not corrective.
 
----
+
 
 ## Design principles
 
@@ -96,17 +96,16 @@ The system feels *aware*, not corrective.
 - **Extreme restraint**  
   One blink, then gone
 
----
+
 
 ## What Blink Reminder does
 
 - Runs silently in the background
 - Appears every **10–15 minutes** (slightly randomized)
-- Shows a brief eye animation (~4 seconds total)
-- Performs **one slow, complete blink**
+- Performs **three slow, complete blink**
 - Fades out and returns to idle
 
----
+
 
 ## What Blink Reminder does NOT do
 
@@ -119,36 +118,20 @@ The system feels *aware*, not corrective.
 
 Everything runs locally on your Mac.
 
----
+
 
 ## Animation behavior
 
 **Blink timing**
-- Eyes appear: ~0.5–1.0 s  
-- Close: ~0.9–1.1 s  
-- Closed rest: ~0.4–0.6 s  
-- Open: ~1.1–1.3 s  
-- Fade out: ~0.2–0.3 s  
+- Eyes appear: ~3.0 s  
+- Blinking practice: ~10 s
+- Fade out: ~1.5 s  
 
-Total visible time: ~3.5–4.0 seconds.
+Total visible time: ~15 seconds.
 
 No squeezing. No looping. No exaggeration.
 
----
 
-## User controls
-
-Blink Reminder has **no settings page** by design.
-
-Menu bar options:
-- Pause (15 minutes / 1 hour / Today)
-- Reminder frequency (10 / 15 / 20 minutes)
-- Intensity (Subtle / Standard)
-- Run at login
-- Quit
-- Support this project
-
----
 
 ## Privacy
 
@@ -158,7 +141,7 @@ Blink Reminder:
 - Does not track behavior
 - Does not require internet access
 
----
+
 
 ## One-line summary
 
