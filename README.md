@@ -6,7 +6,7 @@ BlinkNotch is a lightweight background app that helps reduce dry eye during prol
 
 No interruption. No instructions. Just a gentle cue for a natural reflex.
 
----
+
 
 ## Context (facts)
 
@@ -19,7 +19,7 @@ No interruption. No instructions. Just a gentle cue for a natural reflex.
 - **Risk groups:** office and screen workers report dry-eye symptoms **2–3× more often**
 - **Healthcare impact:** dry eye is among the **top reasons for eye-care visits globally**
 
----
+
 
 ## Why this matters (not “just dry eyes”)
 
@@ -40,7 +40,7 @@ Severe dry eye can progress to:
 - Surface erosions or ulcers
 - Scarring that permanently degrades vision quality
 
----
+
 
 ## What severe dry eye feels like
 
@@ -53,7 +53,7 @@ Patients commonly report:
 
 In advanced cases, blinking itself can feel painful, causing people to blink even less.
 
----
+
 
 ## The problem
 
@@ -61,7 +61,7 @@ Focused screen work suppresses blinking by up to **70%**, disrupting tear and oi
 
 Existing reminder-based tools rely on alerts, sounds, or notifications. These interrupt attention, are easily ignored, and do not address **blink quality**, leaving hundreds of millions of screen users exposed to progressive visual degradation during prolonged digital work.
 
----
+
 
 ## The idea behind BlinkNotch
 
@@ -76,7 +76,7 @@ It **mirrors the missing reflex**.
 
 The system feels *aware*, not corrective.
 
----
+
 
 ## Design principles
 
@@ -92,7 +92,7 @@ The system feels *aware*, not corrective.
 - **Extreme restraint**  
   One blink, then gone
 
----
+
 
 ## What BlinkNotch does
 
@@ -102,7 +102,7 @@ The system feels *aware*, not corrective.
 - Performs **one slow, complete blink**
 - Fades out and returns to idle
 
----
+
 
 ## What BlinkNotch does NOT do
 
@@ -115,7 +115,7 @@ The system feels *aware*, not corrective.
 
 Everything runs locally on your Mac.
 
----
+
 
 ## Animation behavior
 
@@ -130,7 +130,7 @@ Total visible time: ~3.5–4.0 seconds.
 
 No squeezing. No looping. No exaggeration.
 
----
+
 
 ## User controls
 
@@ -144,7 +144,7 @@ Menu bar options:
 - Quit
 - Support this project
 
----
+
 
 ## Privacy
 
@@ -154,7 +154,7 @@ BlinkNotch:
 - Does not track behavior
 - Does not require internet access
 
----
+
 
 ## One-line summary
 
