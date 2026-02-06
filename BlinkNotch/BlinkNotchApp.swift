@@ -12,7 +12,7 @@ struct BlinkNotchApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
-        MenuBarExtra("Blink Reminder", image: Image("MenuBarIcon")) {
+        MenuBarExtra("Blink Reminder", image: "MenuBarIcon") {
             Button("Settings…") {
                 SettingsWindowController.shared.show()
             }
