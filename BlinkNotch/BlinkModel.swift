@@ -24,13 +24,13 @@ final class BlinkModel: ObservableObject {
     
     // PHASE 2: Eye Sore
     let soreTransitionDuration: Double = 0.5
-    let soreHoldSeconds: Double = 2.0
+    let soreHoldSeconds: Double = 1.5
 
     // PHASE 3: Excercise
     let exerciseBlinkCount = 3
     let exerciseCloseDuration: Double = 1.5
-    let exerciseHoldClosedSeconds: Double = 3.0
-    let exerciseOpenDuration: Double = 1.5
+    let exerciseHoldClosedSeconds: Double = 2.0
+    let exerciseOpenDuration: Double = 1.0
     
     @Published var state: BlinkState = .idle
     /// 0 = open, 1 = sore, 2 = closed (morphs between)

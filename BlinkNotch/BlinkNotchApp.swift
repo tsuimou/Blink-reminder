@@ -12,8 +12,25 @@ struct BlinkNotchApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
-        Settings {
-            EmptyView()
+        MenuBarExtra("Blink Reminder", image: Image("MenuBarIcon")) {
+            Button("Settings…") {
+                SettingsWindowController.shared.show()
+            }
+            .keyboardShortcut(",", modifiers: .command)
+
+            Divider()
+
+            Button("Quit Blink Reminder") {
+                NSApp.terminate(nil)
+            }
+        }
+        .commands {
+            CommandGroup(replacing: .appSettings) {
+                Button("Settings…") {
+                    SettingsWindowController.shared.show()
+                }
+                .keyboardShortcut(",", modifiers: .command)
+            }
         }
     }
 }
