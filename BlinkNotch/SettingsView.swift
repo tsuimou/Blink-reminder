@@ -55,6 +55,9 @@ struct SettingsView: View {
                 Text("Adjust how noticeable the blink feels in your peripheral vision.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+
+                BlinkPreview(intensity: intensity)
+                    .padding(.top, 6)
             }
 
             Section(header: Text("Behavior").font(.headline)) {
@@ -126,6 +129,50 @@ struct SettingsView: View {
     private func openSupportURL() {
         guard let url = URL(string: SUPPORT_URL) else { return }
         NSWorkspace.shared.open(url)
+    }
+}
+
+private struct BlinkPreview: View {
+    let intensity: String
+    @State private var isBlinking = false
+
+    private var blinkOpacity: Double {
+        intensity == "standard" ? 0.85 : 0.45
+    }
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color(nsColor: .controlBackgroundColor))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .stroke(Color(nsColor: .separatorColor), lineWidth: 1)
+                )
+
+            HStack(spacing: 16) {
+                Circle().fill(Color.primary.opacity(0.15))
+                    .frame(width: 18, height: 18)
+                Circle().fill(Color.primary.opacity(0.15))
+                    .frame(width: 18, height: 18)
+            }
+
+            Rectangle()
+                .fill(Color.primary.opacity(blinkOpacity))
+                .frame(height: 20)
+                .scaleEffect(y: isBlinking ? 1 : 0.05, anchor: .center)
+                .opacity(isBlinking ? 1 : 0)
+                .animation(.easeInOut(duration: 0.12), value: isBlinking)
+        }
+        .frame(width: 220, height: 60)
+        .accessibilityLabel("Blink preview")
+        .onAppear {
+            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
+                isBlinking = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.18) {
+                    isBlinking = false
+                }
+            }
+        }
     }
 }
 
