@@ -1,5 +1,9 @@
 # BlinkNotch
 
+
+https://github.com/user-attachments/assets/bd9eb8b8-c80d-4f9e-8253-2c2f0912902d
+
+
 **A calm macOS utility that quietly restores healthy blinking during focused work.**
 
 BlinkNotch is a lightweight background app that helps reduce dry eye during prolonged screen use. Instead of alerts, sounds, or notifications, it uses a subtle, peripheral animation near the Mac notch: two eyes appear, blink once slowly, and disappear.
