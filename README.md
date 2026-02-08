@@ -10,6 +10,21 @@ Blink Reminder is a lightweight background app that helps reduce dry eye during 
 
 No interruption. No instructions. Just a gentle cue for a natural reflex.
 
+## System requirements
+
+- **macOS 14.6+** (current project deployment target)
+
+## Run locally (Xcode)
+
+1. Open `BlinkNotch.xcodeproj` in Xcode  
+2. Select the `BlinkNotch` target  
+3. Press **Run**
+
+## Sharing the app
+
+- To share with others **without security warnings**, the app must be **signed and notarized** with a paid Apple Developer account.  
+- Without notarization, friends can still run it, but they will need to **right‑click → Open** on first launch.
+
 
 
 ## Context (facts)
