@@ -28,7 +28,7 @@ final class BlinkModel: ObservableObject {
 
     // PHASE 3: Excercise
     let exerciseBlinkCount = 3
-    let exerciseCloseDuration: Double = 1.5
+    let exerciseCloseDuration: Double = 1.0
     let exerciseHoldClosedSeconds: Double = 2.0
     let exerciseOpenDuration: Double = 1.0
     
@@ -121,6 +121,34 @@ final class BlinkModel: ObservableObject {
         // End without moving up
         state = .settling
         islandOffsetY = 0
+
+        state = .idle
+    }
+
+    // Preview-only blink that matches live close/open timing,
+    // with a configurable closed hold duration.
+    func playPreview(holdSeconds: Double) async {
+        state = .aware
+        eyeMorph = 0.0
+        islandScale = 1.0
+        islandOffsetY = 0
+        opacity = 1.0
+
+        // Single exercise-style blink using the same timings as live
+        state = .closing
+        withAnimation(.easeInOut(duration: exerciseCloseDuration)) {
+            eyeMorph = 2.0
+        }
+        await sleepSeconds(exerciseCloseDuration)
+
+        state = .closed
+        await sleepSeconds(holdSeconds)
+
+        state = .opening
+        withAnimation(.easeInOut(duration: exerciseOpenDuration)) {
+            eyeMorph = 0.0
+        }
+        await sleepSeconds(exerciseOpenDuration)
 
         state = .idle
     }

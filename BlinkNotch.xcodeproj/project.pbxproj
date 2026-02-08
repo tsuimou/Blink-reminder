@@ -11,7 +11,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A00F8CE2F34C05D003E5435 /* BlinkNotch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlinkNotch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A00F8CE2F34C05D003E5435 /* BlinkNotch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = BlinkNotch.app; path = "Blink Reminder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A00F9052F35A699003E5435 /* BlinkNotch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = BlinkNotch.xcodeproj; sourceTree = "<group>"; };
 		1A46FB5C2F35A74300AC7E17 /* BlinkNotch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = BlinkNotch.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */

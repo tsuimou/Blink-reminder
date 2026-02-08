@@ -4,8 +4,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var notchController: NotchController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        UserDefaults.standard.register(defaults: [
+            SettingsKeys.reminderFrequencyMinutes: 15,
+            SettingsKeys.exerciseClosedSeconds: 2,
+            SettingsKeys.exerciseSoundEnabled: false,
+            SettingsKeys.exerciseSoundVolume: 0.6,
+            SettingsKeys.intensity: "subtle",
+            SettingsKeys.runAtLogin: false,
+            SettingsKeys.disableInFullscreen: true,
+            SettingsKeys.disableDuringScreenShare: true,
+            SettingsKeys.disableWhenCameraInUse: true,
+            SettingsKeys.showDockIcon: false,
+            SettingsKeys.pauseUntil: 0.0
+        ])
+
         let showDockIcon = UserDefaults.standard.bool(forKey: SettingsKeys.showDockIcon)
         NSApp.setActivationPolicy(showDockIcon ? .regular : .accessory)
+
+        let runAtLogin = UserDefaults.standard.bool(forKey: SettingsKeys.runAtLogin)
+        RunAtLoginManager.apply(isEnabled: runAtLogin)
+
         notchController = NotchController()
         notchController?.start()
     }

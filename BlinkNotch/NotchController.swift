@@ -24,9 +24,17 @@ final class NotchController {
         loopTask = Task { [weak self] in
             while !Task.isCancelled {
                 let waitSeconds = self?.randomWaitSeconds() ?? 600
-                try? await Task.sleep(nanoseconds: waitSeconds * 1_000_000_000)
+                await self?.sleepWithPauseCheck(totalSeconds: waitSeconds)
 
                 guard let self else { continue }
+                if PauseManager.isPaused {
+                    continue
+                }
+                let disableWhenCameraInUse = UserDefaults.standard.bool(forKey: SettingsKeys.disableWhenCameraInUse)
+                if disableWhenCameraInUse && CameraUsageMonitor.isCameraInUse() {
+                    try? await Task.sleep(nanoseconds: 5_000_000_000)
+                    continue
+                }
                 let screen = self.builtInScreen() ?? NSScreen.main ?? NSScreen.screens.first
                 if let screen {
                     await self.notch.expand(on: screen)
@@ -34,6 +42,21 @@ final class NotchController {
                 await self.model.playOnce()
                 await self.notch.hide()
             }
+        }
+    }
+
+    private func sleepWithPauseCheck(totalSeconds: UInt64) async {
+        var remaining = totalSeconds
+        while remaining > 0 && !Task.isCancelled {
+            if PauseManager.isPaused {
+                let pauseRemaining = PauseManager.remainingSeconds
+                let step = max(1, min(60, Int(pauseRemaining.rounded(.up))))
+                try? await Task.sleep(nanoseconds: UInt64(step) * 1_000_000_000)
+                continue
+            }
+            let step = min(remaining, 5)
+            try? await Task.sleep(nanoseconds: step * 1_000_000_000)
+            remaining -= step
         }
     }
 

@@ -4,117 +4,169 @@ private let SUPPORT_URL = "https://example.com/support"
 
 struct SettingsView: View {
     @AppStorage(SettingsKeys.reminderFrequencyMinutes) private var reminderFrequencyMinutes: Int = 15
-    @AppStorage(SettingsKeys.exerciseEnabled) private var exerciseEnabled: Bool = false
     @AppStorage(SettingsKeys.exerciseClosedSeconds) private var exerciseClosedSeconds: Int = 2
-    @AppStorage(SettingsKeys.exerciseSoundEnabled) private var exerciseSoundEnabled: Bool = false
     @AppStorage(SettingsKeys.intensity) private var intensity: String = "subtle"
     @AppStorage(SettingsKeys.runAtLogin) private var runAtLogin: Bool = false
     @AppStorage(SettingsKeys.disableInFullscreen) private var disableInFullscreen: Bool = true
     @AppStorage(SettingsKeys.disableDuringScreenShare) private var disableDuringScreenShare: Bool = true
+    @AppStorage(SettingsKeys.disableWhenCameraInUse) private var disableWhenCameraInUse: Bool = true
     @AppStorage(SettingsKeys.showDockIcon) private var showDockIcon: Bool = false
+    @AppStorage(SettingsKeys.pauseUntil) private var pauseUntil: Double = 0.0
 
     @State private var showDockRelaunchNote = false
 
+    private var isPaused: Bool {
+        pauseUntil > Date().timeIntervalSince1970
+    }
+
+    private var pauseStatusText: String {
+        guard isPaused else { return "Not paused" }
+        let date = Date(timeIntervalSince1970: pauseUntil)
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        return "Paused until \(formatter.string(from: date))"
+    }
+
     var body: some View {
-        Form {
-            Section(header: Text("Timing").font(.headline)) {
-                Picker("Reminder frequency", selection: $reminderFrequencyMinutes) {
-                    Text("Every 10 minutes").tag(10)
-                    Text("Every 15 minutes").tag(15)
-                    Text("Every 20 minutes").tag(20)
-                }
-                .accessibilityLabel("Reminder frequency")
-
-                Picker("Eye-closed duration", selection: $exerciseClosedSeconds) {
-                    Text("1 second").tag(1)
-                    Text("2 seconds").tag(2)
-                    Text("3 seconds").tag(3)
-                }
-                .pickerStyle(.segmented)
-                .accessibilityLabel("Eye-closed duration")
-
-                Text("Longer closures can help express protective oil from the eyelids. No squeezing.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-
-                Toggle("Play a soft sound when eyes close", isOn: $exerciseSoundEnabled)
-                    .accessibilityLabel("Play a soft sound when eyes close")
-
-                Text("Optional cue for longer eye closure. No alerts.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-
-            Section(header: Text("Appearance").font(.headline)) {
-                Picker("Intensity", selection: $intensity) {
-                    Text("Subtle").tag("subtle")
-                    Text("Standard").tag("standard")
-                }
-                .accessibilityLabel("Intensity")
-
-                Text("Adjust how noticeable the blink feels in your peripheral vision.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-
-                BlinkPreview(intensity: intensity)
-                    .padding(.top, 6)
-            }
-
-            Section(header: Text("Behavior").font(.headline)) {
-                Toggle("Run at login (not yet functional)", isOn: $runAtLogin)
-                    .accessibilityLabel("Run at login")
-
-                Toggle("Disable during full-screen apps", isOn: $disableInFullscreen)
-                    .accessibilityLabel("Disable during full-screen apps")
-
-                Toggle("Disable during screen sharing", isOn: $disableDuringScreenShare)
-                    .accessibilityLabel("Disable during screen sharing")
-
-                Toggle("Show Dock icon", isOn: $showDockIcon)
-                    .accessibilityLabel("Show Dock icon")
-                    .onChange(of: showDockIcon) { _, newValue in
-                        showDockRelaunchNote = !DockIconManager.apply(showDockIcon: newValue)
+        HStack(spacing: 20) {
+            Form {
+                Section(header: Text("Timing").font(.headline)) {
+                    Picker("Reminder frequency", selection: $reminderFrequencyMinutes) {
+                        Text("Every 15 minutes").tag(15)
+                        Text("Every 20 minutes").tag(20)
+                        Text("Every 30 minutes").tag(30)
                     }
+                    .accessibilityLabel("Reminder frequency")
 
-                Text("Shows Blink in the Dock for quicker access to settings.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    Picker("Eye-closed duration", selection: $exerciseClosedSeconds) {
+                        Text("2 seconds").tag(2)
+                        Text("3 seconds").tag(3)
+                    }
+                    .pickerStyle(.segmented)
+                    .accessibilityLabel("Eye-closed duration")
 
-                if showDockRelaunchNote {
+                    Text("Longer closures can help express protective oil from the eyelids. No squeezing.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+
                     HStack {
-                        Text("May require relaunch")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                        Text("Pause reminders")
                         Spacer()
-                        Button("Relaunch Blink Reminder") {
-                            DockIconManager.relaunch()
+                        if isPaused {
+                            Button("Resume") {
+                                PauseManager.resume()
+                            }
+                        } else {
+                            Menu("Pause For") {
+                                Button("15 minutes") {
+                                    PauseManager.pause(for: 15 * 60)
+                                }
+                                Button("1 hour") {
+                                    PauseManager.pause(for: 60 * 60)
+                                }
+                                Button("Rest of today") {
+                                    PauseManager.pauseUntilEndOfDay()
+                                }
+                            }
                         }
                     }
-                }
-            }
 
-            Section(header: Text("Privacy").font(.headline)) {
-                Text("Blink does not use the camera, track activity, or collect data.")
-                    .font(.callout)
-            }
-
-            Section(header: Text("About").font(.headline)) {
-                HStack {
-                    Text("Version")
-                    Spacer()
-                    Text(appVersionString)
+                    Text(pauseStatusText)
+                        .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
 
-                Button("Support this project") {
-                    openSupportURL()
+                Section(header: Text("Appearance").font(.headline)) {
+                    Picker("Intensity", selection: $intensity) {
+                        Text("Subtle").tag("subtle")
+                        Text("Standard").tag("standard")
+                    }
+                    .accessibilityLabel("Intensity")
+
+                    Text("Adjust how noticeable the blink feels in your peripheral vision.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
-                .accessibilityLabel("Support this project")
+
+                Section(header: Text("Behavior").font(.headline)) {
+                    Toggle("Run at login", isOn: $runAtLogin)
+                        .accessibilityLabel("Run at login")
+                        .onChange(of: runAtLogin) { _, newValue in
+                            RunAtLoginManager.apply(isEnabled: newValue)
+                        }
+
+                    Toggle("Disable during full-screen apps", isOn: $disableInFullscreen)
+                        .accessibilityLabel("Disable during full-screen apps")
+
+                    Toggle("Disable during screen sharing", isOn: $disableDuringScreenShare)
+                        .accessibilityLabel("Disable during screen sharing")
+
+                    Toggle("Disable when camera is in use", isOn: $disableWhenCameraInUse)
+                        .accessibilityLabel("Disable when camera is in use")
+
+                    Text("Pauses Blink when another app uses the camera.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+
+                    Toggle("Show Dock icon", isOn: $showDockIcon)
+                        .accessibilityLabel("Show Dock icon")
+                        .onChange(of: showDockIcon) { _, newValue in
+                            showDockRelaunchNote = !DockIconManager.apply(showDockIcon: newValue)
+                        }
+
+                    Text("Shows Blink in the Dock for quicker access to settings.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+
+                    if showDockRelaunchNote {
+                        HStack {
+                            Text("May require relaunch")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            Button("Relaunch Blink Reminder") {
+                                DockIconManager.relaunch()
+                            }
+                        }
+                    }
+                }
+
+                Section(header: Text("Privacy").font(.headline)) {
+                    Text("Blink does not use the camera, track activity, or collect data.")
+                        .font(.callout)
+                }
+
+                Section(header: Text("About").font(.headline)) {
+                    HStack {
+                        Text("Version")
+                        Spacer()
+                        Text(appVersionString)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    Button("Support this project") {
+                        openSupportURL()
+                    }
+                    .accessibilityLabel("Support this project")
+                }
             }
+            .formStyle(.grouped)
+            .frame(minWidth: 440, idealWidth: 480, maxWidth: .infinity)
+
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Preview")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                LiveBlinkPreview(intensity: intensity, closedSeconds: exerciseClosedSeconds)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Spacer()
+            }
+            .frame(minWidth: 220, idealWidth: 240)
         }
-        .formStyle(.grouped)
-        .padding(4)
-        .frame(minWidth: 520, minHeight: 520)
+        .padding(12)
+        .frame(minWidth: 740, minHeight: 520)
         .onAppear {
             showDockRelaunchNote = !DockIconManager.apply(showDockIcon: showDockIcon)
         }
@@ -132,55 +184,44 @@ struct SettingsView: View {
     }
 }
 
-private struct BlinkPreview: View {
+private struct LiveBlinkPreview: View {
     let intensity: String
-    @State private var isBlinking = false
+    let closedSeconds: Int
 
-    private var blinkOpacity: Double {
-        intensity == "standard" ? 0.85 : 0.45
-    }
+    @StateObject private var model = BlinkModel()
+    @State private var loopTask: Task<Void, Never>?
 
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color(nsColor: .controlBackgroundColor))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .stroke(Color(nsColor: .separatorColor), lineWidth: 1)
-                )
+                .fill(Color.black)
 
-            HStack(spacing: 16) {
-                Circle().fill(Color.primary.opacity(0.15))
-                    .frame(width: 18, height: 18)
-                Circle().fill(Color.primary.opacity(0.15))
-                    .frame(width: 18, height: 18)
-            }
-
-            Rectangle()
-                .fill(Color.primary.opacity(blinkOpacity))
-                .frame(height: 20)
-                .scaleEffect(y: isBlinking ? 1 : 0.05, anchor: .center)
-                .opacity(isBlinking ? 1 : 0)
-                .animation(.easeInOut(duration: 0.12), value: isBlinking)
+            EyesView(model: model)
         }
-        .frame(width: 220, height: 60)
+        .frame(width: 240, height: 120)
         .accessibilityLabel("Blink preview")
         .onAppear {
-            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
-                isBlinking = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.18) {
-                    isBlinking = false
+            loopTask?.cancel()
+            loopTask = Task { @MainActor in
+                while !Task.isCancelled {
+                    await model.playPreview(holdSeconds: Double(closedSeconds))
+                    try? await Task.sleep(nanoseconds: 1_000_000_000)
                 }
             }
         }
+        .onDisappear {
+            loopTask?.cancel()
+            loopTask = nil
+        }
     }
+
 }
 
 #if DEBUG
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
-            .frame(width: 520, height: 520)
+            .previewLayout(.sizeThatFits)
     }
 }
 #endif
